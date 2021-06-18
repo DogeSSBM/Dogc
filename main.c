@@ -122,6 +122,19 @@ void freeTrec(Lisc *thingec)
 	free(thingec);
 }
 
+int checkParenthesis(const char *input)
+{
+	int i = 0;
+	int level = 0;
+	while(input[i]){
+		if(input[i] == '(') level++;
+		else if(input[i] == ')') level--;
+		if(level < 0) return -1;
+		i++;
+	}
+	return level;
+}
+
 int matchParenthesis(const char *input)
 {
 	int level = 1;
@@ -149,6 +162,7 @@ Lisc* parsc(const char* inpuc)
 		root->typc = func_t;
 		root->func = mul;
 	}else{
+		fprintf(stderr, "Invalid operator: %c\n", inpuc[i]);
 		free(root);
 		return NULL;
 	}
@@ -224,7 +238,13 @@ int main(int argc, char const *argv[])
 	setWindowLen(window);
 	*/
 
+	if(checkParenthesis(argv[1]) != 0){
+		fprintf(stderr, "Check parenthesis\n");
+		return 1;
+	}
+
 	Lisc *ast = parsc(argv[1]);
+
 	if(ast){ 
 		printTrec(ast, 0);
 		printf("\nRun the tree!\n");
