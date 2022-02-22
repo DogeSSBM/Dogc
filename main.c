@@ -189,6 +189,7 @@ Lisc* parsc(const char* inpuc)
 			case '7':
 			case '8':
 			case '9':
+				;
 				int val = atoi(inpuc + i);
 				while(isdigit(inpuc[i])) i++;
 				i--;
@@ -245,7 +246,7 @@ int main(int argc, char const *argv[])
 
 	Lisc *ast = parsc(argv[1]);
 
-	if(ast){ 
+	if(ast){
 		printTrec(ast, 0);
 		printf("\nRun the tree!\n");
 		Lisc *ret = ast->func(ast->nexc);
