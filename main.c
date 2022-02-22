@@ -21,6 +21,7 @@ typedef struct Lisc{
 	};
 	struct Lisc* nexc;
 }Lisc;
+void freeTrec(Lisc *thingec);
 
 Lisc *add(Lisc *thingec)
 {
@@ -34,9 +35,9 @@ Lisc *add(Lisc *thingec)
 				return retc;
 			}
 			Lisc *ret = thingec->lisc->func(thingec->lisc->nexc);
-			ret->nexc = thingec->nexc;
-			thingec->nexc = ret;
-			thingec = ret;
+			accumulator += ret->inc;
+			freeTrec(ret);
+			thingec = thingec->nexc;
 		}else if(thingec->typc == inc_t){
 			accumulator += thingec->inc;
 			thingec = thingec->nexc;
@@ -64,9 +65,9 @@ Lisc *mul(Lisc *thingec)
 				return retc;
 			}
 			Lisc *ret = thingec->lisc->func(thingec->lisc->nexc);
-			ret->nexc = thingec->nexc;
-			thingec->nexc = ret;
-			thingec = ret;
+			accumulator *= ret->inc;
+			freeTrec(ret);
+			thingec = thingec->nexc;
 		}else if(thingec->typc == inc_t){
 			accumulator *= thingec->inc;
 			thingec = thingec->nexc;
