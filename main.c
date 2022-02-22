@@ -1,5 +1,6 @@
-#include "Includes.h"
-//#define DEBUG_PARSER
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
 typedef enum{
 	err_t=0,
@@ -81,6 +82,11 @@ Lisc *mul(Lisc *thingec)
 	retc->typc = inc_t;
 	retc->inc = accumulator;
 	return retc;
+}
+
+bool isDigit(const char c)
+{
+    return c >='0' && c <='9';
 }
 
 void tabOut(int tabbing)
@@ -192,7 +198,7 @@ Lisc* parsc(const char* inpuc)
 			case '9':
 				;
 				int val = atoi(inpuc + i);
-				while(isdigit(inpuc[i])) i++;
+				while(isDigit(inpuc[i])) i++;
 				i--;
 				cur->nexc = calloc(1, sizeof(Lisc));
 				cur->nexc->typc = inc_t;
@@ -234,11 +240,6 @@ int main(int argc, char const *argv[])
 		fprintf(stderr, "Usage: Dogc <expr>\n");
 		exit(1);
 	}
-	/*
-	Length window = {800, 600};
-	init();
-	setWindowLen(window);
-	*/
 
 	if(checkParenthesis(argv[1]) != 0){
 		fprintf(stderr, "Check parenthesis\n");
@@ -257,14 +258,5 @@ int main(int argc, char const *argv[])
 		freeTrec(ast);
 	}
 
-	/*
-	while(1){
-		Frame frame = frameStart();
-
-
-
-		frameEnd(frame);
-	}
-	*/
 	return 0;
 }
